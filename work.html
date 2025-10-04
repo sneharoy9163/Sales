@@ -24,19 +24,26 @@
                     </select>
                 </label>
                 <i class="fa-regular fa-bell text-amber-400 bg-amber-100 p-2 pl-1 mr-0.5 ml-2 rounded"></i>
-                    <div id="user-info" class="user-info flex">
-                        <ul>
-                            <li class="relative group flex">
-                                <button class="rounded mt-1.5" id="user-fullname"></button>
-                                <ul class="absolute left-0 mt-2 mr-4 w-40 bg-white shadow-lg rounded hidden group-hover:block">   
-                                    <li class="block hover:bg-gray-100"><p><strong>Username:</strong><br><span id="user-username"></span></p></li>
-                                    <li class="block hover:bg-gray-100"><p><strong>Gender:</strong><br><span id="user-gender"></span></p></li>
-                                    <li class="block hover:bg-gray-100"><p><strong>Age:</strong><br><span id="user-age"></span></p></li>   
-                                </ul>
-                            </li>
-                        </ul>
-                        <img id="user-image" src="" alt="Profile Picture" class=" w-10 h-10 ml-0 mt-1"/>      
-                    </div> 
+                <div id="user-info" class="user-info flex items-center">
+                    <img id="user-image" src="" alt="Profile Picture" class="w-10 h-10 ml-3.5 rounded-full"/>    
+                    <button class="rounded ml-0 mt-1.5 font-semibold" id="user-fullname"></button>
+                </div>
+                <!-- User Details Modal -->
+                <div id="userModal" class="hidden fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50 z-50">
+                    <div class="bg-white rounded-lg shadow-lg p-6 w-96 relative">
+                        <h2 class="text-xl font-bold grid place-items-center mb-4">User Details</h2>
+                        <div class="flex items-center mb-4">
+                            <img id="modal-user-image" src="" alt="Profile Picture" class="w-16 h-16 rounded-full mr-4">
+                            <div>
+                                <p><strong>Name:</strong> <span id="modal-user-fullname"></span></p>
+                                <p><strong>Username:</strong> <span id="modal-user-username"></span></p>
+                            </div>
+                        </div>
+                        <p><strong>Gender:</strong> <span id="modal-user-gender"></span></p>
+                        <p><strong>Age:</strong> <span id="modal-user-age"></span></p>
+                        <button id="okBtn" class="mt-6 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 mx-auto block">Close</button>
+                    </div>
+                </div>
             </div> 
         <!--screen-->      
         <div class="flex min-h-screen">
