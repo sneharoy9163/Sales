@@ -476,35 +476,60 @@ new Chart("myChart6", {
   }
 });
 //sign in
-const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJlbWlseXMiLCJlbWFpbCI6ImVtaWx5LmpvaG5zb25AeC5kdW1teWpzb24uY29tIiwiZmlyc3ROYW1lIjoiRW1pbHkiLCJsYXN0TmFtZSI6IkpvaG5zb24iLCJnZW5kZXIiOiJmZW1hbGUiLCJpbWFnZSI6Imh0dHBzOi8vZHVtbXlqc29uLmNvbS9pY29uL2VtaWx5cy8xMjgiLCJpYXQiOjE3NTgxMTY2MzUsImV4cCI6MTc2MDcwODYzNX0.RB_xtybEsoR_8W572ElEFTbPQX7yexv0hIsSayKTpjU"
+const modal = document.getElementById('userModal');
+const openBtn = document.getElementById('user-fullname'); 
+const userImg = document.getElementById('user-image');    
+const okBtn = document.getElementById('okBtn');
+//Open modal when clicking on name
+openBtn.addEventListener('click', () => {
+  modal.classList.remove('hidden');
+});
+//Open modal when clicking on profile image
+userImg.addEventListener('click', () => {
+  modal.classList.remove('hidden');
+});
+//Close modal when clicking the Close button
+okBtn.addEventListener('click', () => {
+  modal.classList.add('hidden');
+});
+modal.addEventListener('click', (e) => {
+  if (e.target === modal) {
+    modal.classList.add('hidden');
+  }
+});
+//Token
+const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJlbWlseXMiLCJlbWFpbCI6ImVtaWx5LmpvaG5zb25AeC5kdW1teWpzb24uY29tIiwiZmlyc3ROYW1lIjoiRW1pbHkiLCJsYXN0TmFtZSI6IkpvaG5zb24iLCJnZW5kZXIiOiJmZW1hbGUiLCJpbWFnZSI6Imh0dHBzOi8vZHVtbXlqc29uLmNvbS9pY29uL2VtaWx5cy8xMjgiLCJpYXQiOjE3NTgxMTY2MzUsImV4cCI6MTc2MDcwODYzNX0.RB_xtybEsoR_8W572ElEFTbPQX7yexv0hIsSayKTpjU";
 localStorage.setItem("accessToken", accessToken);
-  
-const token = localStorage.getItem('accessToken');
-
+//Load user data
 window.onload = function () {
   const token = localStorage.getItem("accessToken");
   if (!token) {
     alert("No token found. Please log in.");
-    window.location.href = "work.html";
-    return;
-  }
-  fetch('https://dummyjson.com/auth/me', {
-    method: 'GET',
-    headers: {
-      'Authorization': `Bearer ${token}`
+      return;
     }
-  }).then(res => {
-    if (!res.ok) throw new Error("Unauthorized");
-    return res.json();
-  }).then(data => {
+    fetch('https://dummyjson.com/auth/me', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    .then(res => {
+      if (!res.ok) throw new Error("Unauthorized");
+      return res.json();
+    })
+    .then(data => {
+    //Update navbar
     document.getElementById('user-image').src = data.image;
     document.getElementById('user-fullname').textContent = `${data.firstName} ${data.lastName}`;
-    document.getElementById('user-username').textContent = data.username;
-    document.getElementById('user-gender').textContent = data.gender;
-    document.getElementById('user-age').textContent = data.age;
-  }).catch(err => {
+    //Update modal details
+    document.getElementById('modal-user-image').src = data.image;
+    document.getElementById('modal-user-fullname').textContent = `${data.firstName} ${data.lastName}`;
+    document.getElementById('modal-user-username').textContent = data.username;
+    document.getElementById('modal-user-gender').textContent = data.gender;
+    document.getElementById('modal-user-age').textContent = data.age;
+  })
+  .catch(err => {
     alert("Session expired. Please log in again.");
     localStorage.removeItem("accessToken");
-    window.location.href = "work.html";
-  });
-};
+    });
+  };
